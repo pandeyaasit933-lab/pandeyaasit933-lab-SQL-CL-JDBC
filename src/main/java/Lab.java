@@ -38,15 +38,39 @@ import util.ConnectionUtil;
  */
 public class Lab {
 
-    public void createSong(Song song)  {
-        //write jdbc code here
+    public void createSong(Song song) {
+        // Write your SQL statement on a single line as requested
+        String sql = "INSERT INTO songs (title, artist) VALUES (?, ?)";
+        
+        try (Connection conn = ConnectionUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, song.getTitle());
+            pstmt.setString(2, song.getArtist());
+            
+            pstmt.executeUpdate();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-
-    public List<Song> getAllSongs(){
+    
+    public List<Song> getAllSongs() {
         List<Song> songs = new ArrayList<>();
-
-        //write jdbc code here
-
-        return songs;
-    }
-}
+        String sql = "SELECT id, title, artist FROM songs";
+        
+        try (Connection conn = ConnectionUtil.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String title = rs.getString("title");
+                String artist = rs.getString("artist");
+                
+                // Assuming your Song class has a constructor like Song(id, title, artist) 
+                // or appropriate setter methods. Adjust constructor parameters if needed.
+                Song song = new Song(id, title, artist);
+            }
+        }
+    }}
