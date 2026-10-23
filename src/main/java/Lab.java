@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.PreparedStatement;
 
 import util.ConnectionUtil;
 
@@ -67,6 +68,7 @@ public class Lab {
                 int id = rs.getInt("id");
                 String title = rs.getString("title");
                 String artist = rs.getString("artist");
+                songs.add(song);
                 
                 // Assuming your Song class has a constructor like Song(id, title, artist) 
                 // or appropriate setter methods. Adjust constructor parameters if needed.
