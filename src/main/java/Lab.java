@@ -68,11 +68,17 @@ public class Lab {
                 int id = rs.getInt("id");
                 String title = rs.getString("title");
                 String artist = rs.getString("artist");
+                Song song=new Song(id,title,artist);
                 songs.add(song);
-                
+            }
                 // Assuming your Song class has a constructor like Song(id, title, artist) 
                 // or appropriate setter methods. Adjust constructor parameters if needed.
-                Song song = new Song(id, title, artist);
+                
             }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return songs;
+        
         }
-    }}
+}
